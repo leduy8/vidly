@@ -1,0 +1,1 @@
+Vidly app - an imaginary movies rental app built from Node JS. Credit to Mosh Nodejs course.
