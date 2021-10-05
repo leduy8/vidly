@@ -4,7 +4,7 @@ const Joi = require("joi");
 const genreSchema = mongoose.Schema({
   name: {
     type: String,
-    require: true,
+    required: true,
     minlength: 2,
     maxlength: 50,
   },
@@ -22,3 +22,4 @@ function validateGenre(genre) {
 
 exports.Genre = Genre;
 exports.validate = validateGenre;
+exports.genreSchema = genreSchema;

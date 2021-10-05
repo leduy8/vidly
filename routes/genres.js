@@ -1,5 +1,5 @@
 const express = require("express");
-const ObjectId = require("mongoose").Types.ObjectId;
+const { isValidObjectId } = require("../middlewares");
 const { Genre, validate } = require("../models/genre");
 const router = express.Router();
 
@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    if (!ObjectId.isValid(req.params.id))
+    if (!isValidObjectId(req.params.id))
       return res.status(400).send("Invalid Id.");
 
     const genre = await Genre.findById(req.params.id);
@@ -42,7 +42,7 @@ router.put("/:id", async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   try {
-    if (!ObjectId.isValid(req.params.id))
+    if (!isValidObjectId(req.params.id))
       return res.status(400).send("Invalid Id.");
 
     const genre = await Genre.findByIdAndUpdate(
@@ -59,7 +59,7 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    if (!ObjectId.isValid(req.params.id))
+    if (!isValidObjectId(req.params.id))
       return res.status(400).send("Invalid Id.");
 
     const genre = await Genre.findByIdAndRemove(req.params.id);

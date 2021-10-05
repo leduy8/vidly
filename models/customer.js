@@ -4,18 +4,19 @@ const Joi = require("joi");
 const customerSchema = mongoose.Schema({
   name: {
     type: String,
-    require: true,
+    required: true,
     minlength: 2,
     maxlength: 50,
   },
   phone: {
     type: String,
-    require: true,
-    length: 10,
+    required: true,
+    minlength: 10,
+    maxlength: 10,
   },
   isGold: {
     type: Boolean,
-    require: true,
+    required: true,
     default: false,
   },
 });

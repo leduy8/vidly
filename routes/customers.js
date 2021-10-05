@@ -1,5 +1,5 @@
 const express = require("express");
-const ObjectId = require("mongoose").Types.ObjectId;
+const { isValidObjectId } = require("../middlewares");
 const { Customer, validate } = require("../models/customer");
 const router = express.Router();
 
@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    if (!ObjectId.isValid(req.params.id))
+    if (!isValidObjectId(req.params.id))
       return res.status(400).send("Invalid Id.");
 
     const customer = await Customer.findById(req.params.id);
@@ -46,7 +46,7 @@ router.put("/:id", async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   try {
-    if (!ObjectId.isValid(req.params.id))
+    if (!isValidObjectId(req.params.id))
       return res.status(400).send("Invalid Id.");
 
     const customer = await Customer.findByIdAndUpdate(
@@ -68,7 +68,7 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    if (!ObjectId.isValid(req.params.id))
+    if (!isValidObjectId(req.params.id))
       return res.status(400).send("Invalid Id.");
 
     const customer = await Customer.findByIdAndRemove(req.params.id);
