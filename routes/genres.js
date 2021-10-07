@@ -1,5 +1,5 @@
 const express = require("express");
-const { isValidObjectId } = require("../middlewares");
+const { isValidObjectId } = require("../utils");
 const { Genre, validate } = require("../models/genre");
 const router = express.Router();
 

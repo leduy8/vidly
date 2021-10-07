@@ -1,5 +1,5 @@
 const express = require("express");
-const { isValidObjectId } = require("../middlewares");
+const { isValidObjectId } = require("../utils");
 const { Customer, validate } = require("../models/customer");
 const router = express.Router();
 
