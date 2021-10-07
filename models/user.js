@@ -24,6 +24,9 @@ const userSchema = mongoose.Schema({
     minlength: 6,
     maxlength: 1024,
   },
+  isAdmin: {
+    type: Boolean
+  }
 });
 
 userSchema.methods.setPassword = async function (password) {
@@ -37,7 +40,7 @@ userSchema.methods.checkPassword = async function (password) {
 };
 
 userSchema.methods.generateToken = function () {
-  return jwt.sign({ _id: this._id }, process.env.secretKey);
+  return jwt.sign({ _id: this._id, isAdmin: this.isAdmin }, process.env.secretKey);
 };
 
 const User = mongoose.model("User", userSchema);
