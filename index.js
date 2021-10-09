@@ -1,5 +1,6 @@
-const Joi = require('joi');
-Joi.objectId = require('joi-objectid')(Joi);
+require("express-async-errors");
+const Joi = require("joi");
+Joi.objectId = require("joi-objectid")(Joi);
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
@@ -12,6 +13,8 @@ const movies = require("./routes/movies");
 const rentals = require("./routes/rentals");
 const users = require("./routes/users");
 const auth = require("./routes/auth");
+const error = require("./middlewares/error");
+const logger = require("./logger");
 
 app.use(express.json());
 app.use(helmet());
@@ -21,6 +24,12 @@ app.use("/api/movies", movies);
 app.use("/api/rentals", rentals);
 app.use("/api/users", users);
 app.use("/api/auth", auth);
+app.use(error);
+
+if (!process.env.secretKey) {
+  console.error("FATAL ERROR: secretKey is not defined.");
+  process.exit(1);
+}
 
 mongoose
   .connect("mongodb://localhost/vidly")
@@ -34,4 +43,7 @@ if (process.env.NODE_ENV === "development") {
 }
 
 const port = process.env.PORT || 5000;
-app.listen(port, () => console.log(`Listening on port ${port}...`));
+app.listen(port, () => {
+  console.log(`Listening on port ${port}...`);
+  // logger.info(`Listening on port ${port}...`);
+});
