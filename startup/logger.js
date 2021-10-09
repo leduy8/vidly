@@ -1,5 +1,6 @@
+require("express-async-errors");
 const { createLogger, format, transports } = require("winston");
-const { combine, timestamp, align, prettyPrint, colorize, errors } = format;
+const { combine, timestamp, prettyPrint, colorize } = format;
 
 module.exports = createLogger({
   // exitOnError: false,
@@ -15,6 +16,7 @@ module.exports = createLogger({
         prettyPrint(),
         colorize(),
       ),
-    })
+    }),
+    new transports.Console()
   ]
 });
